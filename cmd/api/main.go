@@ -16,7 +16,7 @@ import (
 
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
 type apiConfig struct {
@@ -44,11 +44,7 @@ func main() {
 		log.Println("DATABASE_URL environment variable is not set")
 		log.Println("Running without CRUD endpoints")
 	} else {
-		parsedURL, err := addParseTimeParam(dbURL)
-		if err != nil {
-			log.Fatal(err)
-		}
-		db, err := sql.Open("mysql", parsedURL)
+		db, err := sql.Open("libsql", dbURL)
 		if err != nil {
 			log.Fatal(err)
 		}
